@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Fruitsee</string>
+    <string name="guess_unknown">What is this?</string>
+    <string name="guess_banana">This is a banana!</string>
+    <string name="guess_carambola">This is a starfruit!</string>
+    <string name="guess_pitahaya">This is a dragonfruit!</string>
+    <string name="mode_crop">Crop Mode</string>
+    <string name="mode_trace">Trace Mode</string>
+    <string name="mode_fill">Fill Mode</string>
+    <string name="mode_fill_progress">Filling…</string>
+    <string name="mode_none">Choose a Mode</string>
+    <string name="mode_confirm">Applying Changes…</string>
+</resources>

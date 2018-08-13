@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryAlt">#FF7575</color>
+    <color name="colorPrimaryAltDark">#CC5555</color>
+    <color name="colorPrimaryAltDarker">#992222</color>
+    <color name="colorAccentAlt">#31BB31</color>
+    <color name="colorAccentAlt2">#AADDAA</color>
+    <color name="colorPrimaryAlt2">#FFFFFF</color>
+    <color name="colorTraceBlue">#BB4499EE</color>
+    <color name="colorTraceOrange">#BBEE9944</color>
+    <color name="colorTraceBlueOpaque">#4499EE</color>
+    <color name="colorTraceOrangeOpaque">#EE9944</color>
+</resources>

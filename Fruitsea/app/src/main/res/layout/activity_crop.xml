@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.melonfishy.fruitsee.CropActivity">
+    <ImageView
+        android:id="@+id/iv_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.melonfishy.fruitsee.utils.TraceView
+        android:id="@+id/trv_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.melonfishy.fruitsee.utils.TraceView
+        android:id="@+id/trv_previewCrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_crop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/colorTraceOrangeOpaque"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_crop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_trace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/colorTraceBlueOpaque"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_trace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/fab_fill"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_fill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="@color/colorTraceBlueOpaque"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_fill"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/fab_crop"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_check"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_clean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_clean"
+        app:layout_constraintLeft_toRightOf="@+id/fab_trace"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tv_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mode_none"
+        android:textColor="@color/colorPrimaryAlt2"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="32sp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+</android.support.constraint.ConstraintLayout>

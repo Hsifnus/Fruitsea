@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccentAlt2"
+    tools:context="com.melonfishy.fruitsee.EntryActivity">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:src="@drawable/fruitsea_logo_png" />
+
+        <ProgressBar
+            android:id="@+id/progressBar7"
+            android:rotation="270"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar8"
+            android:rotation="315"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle_2"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            android:rotation="0"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            android:rotation="45"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle_2"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            android:rotation="90"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar4"
+            android:rotation="135"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle_2"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar5"
+            android:rotation="180"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar6"
+            android:rotation="225"
+            android:indeterminate="true"
+            android:layout_width="120sp"
+            android:layout_height="120sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:indeterminateDrawable="@drawable/loading_circle_2"
+            android:indeterminateDuration="800"
+            android:interpolator="@android:anim/accelerate_interpolator"/>
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
