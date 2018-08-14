@@ -13,7 +13,9 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Evaluation for CIFAR-10.
+# NOTE: Based off of the Advanced CNN tutorial in Tensorflow documentation
+
+"""Evaluation for Fruits-360.
 Accuracy:
 cifar10_train.py achieves 83.0% accuracy after 100K steps (256 epochs
 of data) as judged by cifar10_eval.py.
@@ -22,7 +24,7 @@ On a single Tesla K40, cifar10_train.py processes a single batch of 128 images
 in 0.25-0.35 sec (i.e. 350 - 600 images /sec). The model reaches ~86%
 accuracy after 100K steps in 8 hours of training time.
 Usage:
-Please see the tutorial and website for how to download the CIFAR-10
+Please see the tutorial and website for how to download the Fruits-360
 data set, compile the program and train the model.
 http://tensorflow.org/tutorials/deep_cnn/
 """
@@ -115,9 +117,9 @@ def eval_once(saver, summary_writer, top_k_op, summary_op):
 
 
 def evaluate():
-  """Eval CIFAR-10 for a number of steps."""
+  """Eval Fruits-360 for a number of steps."""
   with tf.Graph().as_default() as g:
-    # Get images and labels for CIFAR-10.
+    # Get images and labels for Fruits-360.
     eval_data = FLAGS.eval_data == './fruits-360/Test'
     images, labels = fruits_net.inputs(eval_data=eval_data)
 
@@ -127,7 +129,7 @@ def evaluate():
 
     # Calculate predictions.
     top_k_op = tf.nn.in_top_k(logits, labels, 1)
-    # print(tf.Session().run(labels))
+    print(tf.Session().run(tf.gather(labels, [i for i in range(FLAGS.batch_size)])))
 
     # Restore the moving average version of the learned variables for eval.
     variable_averages = tf.train.ExponentialMovingAverage(

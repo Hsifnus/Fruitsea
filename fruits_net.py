@@ -4,7 +4,9 @@ import re, os
 import net_utils
 import random
 
-# Global constants describing the CIFAR-10 data set.
+# NOTE: Based off of the Advanced CNN tutorial in Tensorflow documentation
+
+# Global constants describing the Fruits-360 data set.
 x_dim, y_dim = 100, 100
 NUM_CLASSES = 75
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 37836
@@ -26,9 +28,12 @@ tf.flags.DEFINE_string('data_dir', './fruits-360/',
                            """Path to the Fruits-360 directory.""")
 tf.flags.DEFINE_boolean('use_fp16', False,
                             """Train the model using fp16.""")
+
 # Generator that crawls through training data
 training_files_list = net_utils.fetch_next_file_and_label(os.path.join(FLAGS.data_dir, 'Training'))
+# Generator that crawls through test data
 test_files_list = net_utils.fetch_next_file_and_label(os.path.join(FLAGS.data_dir, 'Test'))
+clock = 0 # Clock variable used to control rotations while training
 
 def _activation_summary(x):
   """Helper to create summaries for activations.
@@ -95,7 +100,7 @@ def inputs(eval_data=False):
   Raises:
     ValueError: If no data_dir
   """
-  global test_files_list, training_files_list
+  global test_files_list, training_files_list, clock
   if not FLAGS.data_dir:
     raise ValueError('Please supply a data_dir')
   np_images, np_labels = [], []
@@ -114,13 +119,14 @@ def inputs(eval_data=False):
 
     chance = random.uniform(0, 1)
     if chance <= SAMPLING_CHANCE or eval_data:
-        rotation = random.uniform(0, 360)
-        saturation = random.uniform(0.8, 1.2)
-        brightness = random.uniform(0.7, 1.2)
-        contrast = random.uniform(0.9, 1.3)
+        rotation = 12 * clock
+        saturation = random.uniform(0.7, 2)
+        brightness = random.uniform(0.7, 1.3)
+        contrast = random.uniform(0.6, 1.5)
         np_images.append(net_utils.open_rotated_and_saturated_jpg(path, y_dim, x_dim, rotation, saturation,
                                                                   brightness, contrast)["rgb"])
         np_labels.append(label)
+        clock = (clock + 1) % 30
 
   np_images, np_labels = np.array(np_images), np.array(np_labels)
   # print("numpy image collection shape:", np_images.shape)
@@ -134,7 +140,7 @@ def inputs(eval_data=False):
   return images, labels
 
 def inference(images):
-  """Build the CIFAR-10 model.
+  """Build the Fruits-360 model.
   Args:
     images: Images returned from distorted_inputs() or inputs().
   Returns:
@@ -241,7 +247,7 @@ def loss(logits, labels):
 
 
 def _add_loss_summaries(total_loss):
-  """Add summaries for losses in CIFAR-10 model.
+  """Add summaries for losses in Fruits-360 model.
   Generates moving average for all losses and associated summaries for
   visualizing the performance of the network.
   Args:
@@ -266,7 +272,7 @@ def _add_loss_summaries(total_loss):
 
 
 def train(total_loss, global_step):
-  """Train CIFAR-10 model.
+  """Train Fruits-360 model.
   Create an optimizer and apply to all trainable variables. Add moving
   average for all trainable variables.
   Args:

@@ -13,20 +13,8 @@
 # limitations under the License.
 # ==============================================================================
 
-"""A binary to train CIFAR-10 using a single GPU.
-Accuracy:
-cifar10_train.py achieves ~86% accuracy after 100K steps (256 epochs of
-data) as judged by cifar10_eval.py.
-Speed: With batch_size 128.
-System        | Step Time (sec/batch)  |     Accuracy
-------------------------------------------------------------------
-1 Tesla K20m  | 0.35-0.60              | ~86% at 60K steps  (5 hours)
-1 Tesla K40m  | 0.25-0.35              | ~86% at 100K steps (4 hours)
-Usage:
-Please see the tutorial and website for how to download the CIFAR-10
-data set, compile the program and train the model.
-http://tensorflow.org/tutorials/deep_cnn/
-"""
+# NOTE: Based off of the Advanced CNN tutorial in Tensorflow documentation
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -52,11 +40,11 @@ tf.flags.DEFINE_integer('log_frequency', 1,
 
 
 def train():
-  """Train CIFAR-10 for a number of steps."""
+  """Train Fruits-360 for a number of steps."""
   with tf.Graph().as_default():
     global_step = tf.train.get_or_create_global_step()
 
-    # Get images and labels for CIFAR-10.
+    # Get images and labels for Fruits-360.
     # Force input pipeline to CPU:0 to avoid operations sometimes ending up on
     # GPU and resulting in a slow down.
     with tf.device('/cpu:0'):
@@ -116,17 +104,13 @@ def main(argv=None):  # pylint: disable=unused-argument
     tf.gfile.DeleteRecursively(FLAGS.train_dir)
   tf.gfile.MakeDirs(FLAGS.train_dir)
   num_iterations = int(37836 / FLAGS.batch_size)
-  fruits_net.set_sampling_chance(0.0001)
-  for i in range(int(num_iterations / 2) + 100):
-    print("===Randomized Run A %d/%d===" % (i, int(num_iterations / 2) + 100))
-    train()
-  fruits_net.set_sampling_chance(1)
-  for i in range(num_iterations + 100):
-    print("===Run %d/%d===" % (i, num_iterations + 100))
+  fruits_net.set_sampling_chance(0.1)
+  for i in range(num_iterations + 1):
+    print("===Static Run %d/%d===" % (i, num_iterations + 1))
     train()
   fruits_net.set_sampling_chance(0.0001)
-  for i in range(int(num_iterations / 2) + 100):
-    print("===Randomized Run B %d/%d===" % (i, int(num_iterations / 2) + 100))
+  for i in range(2 * num_iterations):
+    print("===Randomized Run %d/%d===" % (i, 2 * num_iterations))
     train()
 
 
