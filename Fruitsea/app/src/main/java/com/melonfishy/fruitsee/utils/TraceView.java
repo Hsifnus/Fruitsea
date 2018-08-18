@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +39,7 @@ public class TraceView extends AppCompatImageView {
     private int traceBlue, traceOrange;
     private boolean transformMode;
     private CropActivity parent;
+    private Paint mPaint;
 
     public static final int MODE_CROP = 0;
     public static final int MODE_TRACE = 1;
@@ -185,6 +188,7 @@ public class TraceView extends AppCompatImageView {
         inflated = locked = false;
         traceBlue = ContextCompat.getColor(getContext(), R.color.colorTraceBlue);
         traceOrange = ContextCompat.getColor(getContext(), R.color.colorTraceOrange);
+        mPaint = new Paint();
         parent = (CropActivity) getContext();
     }
 
@@ -199,6 +203,7 @@ public class TraceView extends AppCompatImageView {
         inflated = locked = false;
         traceBlue = ContextCompat.getColor(getContext(), R.color.colorTraceBlue);
         traceOrange = ContextCompat.getColor(getContext(), R.color.colorTraceOrange);
+        mPaint = new Paint();
         parent = (CropActivity) getContext();
     }
 
@@ -302,11 +307,10 @@ public class TraceView extends AppCompatImageView {
 
             Canvas canvas = new Canvas(image);
             if (lastX > -1 && lastY > -1) {
-                Paint paint = new Paint();
-                paint.setColor(traceBlue);
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(strokeSize);
-                canvas.drawLine(lastX, lastY, x, y, paint);
+                mPaint.setColor(traceBlue);
+                mPaint.setStyle(Paint.Style.STROKE);
+                mPaint.setStrokeWidth(strokeSize);
+                canvas.drawLine(lastX, lastY, x, y, mPaint);
             }
             // update previous location information
             lastX = x;
@@ -345,20 +349,19 @@ public class TraceView extends AppCompatImageView {
 
         clearBitmap();
         Canvas canvas = new Canvas(image);
-        Paint paint = new Paint();
 
-        paint.setColor(traceOrange);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(strokeSize);
+        mPaint.setColor(traceOrange);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(strokeSize);
 
-        canvas.drawLine(cropX1, cropY1, cropX2, cropY1, paint);
-        canvas.drawLine(cropX2, cropY1, cropX2, cropY2, paint);
-        canvas.drawLine(cropX2, cropY2, cropX1, cropY2, paint);
-        canvas.drawLine(cropX1, cropY2, cropX1, cropY1, paint);
+        canvas.drawLine(cropX1, cropY1, cropX2, cropY1, mPaint);
+        canvas.drawLine(cropX2, cropY1, cropX2, cropY2, mPaint);
+        canvas.drawLine(cropX2, cropY2, cropX1, cropY2, mPaint);
+        canvas.drawLine(cropX1, cropY2, cropX1, cropY1, mPaint);
 
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        canvas.drawCircle(cropX1, cropY1, 30, paint);
-        canvas.drawCircle(cropX2, cropY2, 30, paint);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawCircle(cropX1, cropY1, 30, mPaint);
+        canvas.drawCircle(cropX2, cropY2, 30, mPaint);
 
 
     }
@@ -400,5 +403,10 @@ public class TraceView extends AppCompatImageView {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public void setEraseMode(boolean mode) {
+        mPaint.setXfermode(mode ? new PorterDuffXfermode(PorterDuff.Mode.CLEAR) : null);
+        strokeSize = mode ? 30 : 10;
     }
 }

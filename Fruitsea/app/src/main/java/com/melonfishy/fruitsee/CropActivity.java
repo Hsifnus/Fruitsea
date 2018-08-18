@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -28,6 +29,8 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
     private boolean locked, firstPass;
     private TextView modeText;
     private TraceView trace, trace2;
+    public final static int CLASSIFY_REQUEST = 200;
+    public final static int CLASSIFY_REPLY = 201;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +48,7 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
 
             filename = getIntent().getStringExtra(CameraActivity.CAMERA_FN_FLAG);
             File imgFile = new File(filename);
-            imgFile.deleteOnExit();
 
-            if (imgFile.exists()) {
-                Bitmap capture = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                preview.setImageBitmap(capture);
-            }
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int screenHeight = displayMetrics.heightPixels;
@@ -60,8 +58,25 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
             trace2.setDimensions(screenHeight, screenWidth);
             trace.initBitmap();
             trace2.initBitmap();
-            trace.changeMode(TraceView.MODE_TRACE);
-            trace2.changeMode(TraceView.MODE_NONE);
+
+            if (imgFile.exists()) {
+                Bitmap capture = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                if (imgFile.delete()) {
+                    preview.setImageBitmap(capture);
+                    trace.changeMode(TraceView.MODE_TRACE);
+                    trace2.changeMode(TraceView.MODE_NONE);
+                } else {
+                    trace.changeMode(TraceView.MODE_NONE);
+                    trace2.changeMode(TraceView.MODE_NONE);
+                    locked = true;
+                    modeText.setText(getString(R.string.mode_error));
+                }
+            } else {
+                trace.changeMode(TraceView.MODE_NONE);
+                trace2.changeMode(TraceView.MODE_NONE);
+                locked = true;
+                modeText.setText(getString(R.string.mode_error));
+            }
         }
 
         FloatingActionButton fabCrop = (FloatingActionButton) findViewById(R.id.fab_crop);
@@ -69,6 +84,7 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
         FloatingActionButton fabFill = (FloatingActionButton) findViewById(R.id.fab_fill);
         FloatingActionButton fabConfirm = (FloatingActionButton) findViewById(R.id.fab_confirm);
         FloatingActionButton fabClean = (FloatingActionButton) findViewById(R.id.fab_clean);
+        FloatingActionButton fabErase = (FloatingActionButton) findViewById(R.id.fab_erase);
         modeText = (TextView) findViewById(R.id.tv_mode);
 
         fabCrop.setOnClickListener(v -> {
@@ -97,6 +113,7 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
             modeText.setText(R.string.mode_trace);
             modeText.setTextColor(ContextCompat.getColor(getApplicationContext(),
                     R.color.colorTraceBlueOpaque));
+            trace.setEraseMode(false);
         });
 
         fabFill.setOnClickListener(v -> {
@@ -111,6 +128,7 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
             modeText.setText(R.string.mode_fill);
             modeText.setTextColor(ContextCompat.getColor(getApplicationContext(),
                     R.color.colorTraceBlueOpaque));
+            trace.setEraseMode(false);
         });
 
         fabClean.setOnClickListener(v -> {
@@ -129,6 +147,19 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
             confirm();
             Bitmap previewBitmap = ((BitmapDrawable)preview.getDrawable()).getBitmap();
             trace.transformBitmap(previewBitmap, TraceView.MODE_TRACE);
+        });
+
+        fabErase.setOnClickListener(v -> {
+            if (locked) {
+                return;
+            }
+            trace.changeMode(TraceView.MODE_TRACE);
+            trace2.changeMode(TraceView.MODE_NONE);
+            trace.bringToFront();
+            modeText.setText(R.string.mode_erase);
+            modeText.setTextColor(ContextCompat.getColor(getApplicationContext(),
+                    R.color.colorAccentAlt));
+            trace.setEraseMode(true);
         });
     }
 
@@ -183,14 +214,22 @@ public class CropActivity extends AppCompatActivity implements AsyncResponse {
                 e.printStackTrace();
             }
 
-            startActivity(toClassify);
+            startActivityForResult(toClassify, CLASSIFY_REQUEST);
         }
     }
 
     @Override
-    public void processFinish(Integer output) {
+    public void processFinish(ArrayList<Integer> output) {
         throw new UnsupportedOperationException("CropActivity does not support processFinish()"
-        + " for Integer arguments.");
+        + " for ArrayList<Integer arguments.");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CLASSIFY_REQUEST && resultCode == CLASSIFY_REPLY) {
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

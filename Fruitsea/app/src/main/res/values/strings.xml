@@ -8,6 +8,11 @@
     <string name="mode_trace">Trace Mode</string>
     <string name="mode_fill">Fill Mode</string>
     <string name="mode_fill_progress">Filling…</string>
+    <string name="mode_erase">Erase Mode</string>
     <string name="mode_none">Choose a Mode</string>
+    <string name="mode_error">Error Loading Image!</string>
     <string name="mode_confirm">Applying Changes…</string>
+    <string name="classify_result_title">Fruit Guesses</string>
+    <string name="classify_result_option">DUMMY</string>
+    <string name="classify_result_error">Error Processing Image!</string>
 </resources>

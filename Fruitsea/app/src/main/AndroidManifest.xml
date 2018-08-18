@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".EntryActivity"
             android:screenOrientation="portrait"
@@ -27,11 +27,13 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CropActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ClassifyActivity"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ClassifyActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
